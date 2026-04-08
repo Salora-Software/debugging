@@ -16,9 +16,10 @@ const authConfig = {
 	]
 } satisfies Omit<Parameters<typeof betterAuth>[0], 'database'>;
 
-export const createAuth = (origin: string, d1: AnyD1Database) =>
+export const createAuth = (origin: string = 'http://localhost:5173', d1: AnyD1Database) =>
 	betterAuth({
-		...{ authConfig, baseURL: origin },
+		...authConfig,
+		baseURL: origin,
 		database: drizzleAdapter(getDb(d1), { provider: 'sqlite' })
 	});
 
@@ -28,4 +29,4 @@ export const createAuth = (origin: string, d1: AnyD1Database) =>
  * This instance is used by the `better-auth` CLI for schema generation ONLY.
  * To access `auth` at runtime, use `event.locals.auth`.
  */
-export const auth = createAuth(null!, null!);
+export const auth = createAuth('http://localhost:5173', null!);

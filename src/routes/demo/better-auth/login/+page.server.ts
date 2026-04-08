@@ -28,6 +28,7 @@ export const actions: Actions = {
 				}
 			});
 		} catch (error) {
+			console.warn('Signin error', error);
 			if (error instanceof APIError) {
 				return fail(400, { message: error.message || 'Signin failed' });
 			}

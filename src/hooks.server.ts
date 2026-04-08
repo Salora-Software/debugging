@@ -6,7 +6,7 @@ import { svelteKitHandler } from 'better-auth/svelte-kit';
 const handleBetterAuth: Handle = async ({ event, resolve }) => {
 	if (!event.platform?.env?.DB)
 		throw new Error('D1 binding "DB" not found - are you running with wrangler?');
-
+	console.log(event.url.origin);
 	event.locals.auth = createAuth(event.url.origin, event.platform.env.DB);
 
 	const { auth } = event.locals;
