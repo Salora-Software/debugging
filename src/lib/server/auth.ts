@@ -5,6 +5,7 @@ import { env } from '$env/dynamic/private';
 import { getRequestEvent } from '$app/server';
 import { getDb } from '$lib/server/db';
 import type { AnyD1Database } from 'drizzle-orm/d1';
+import { magicLink, openAPI, organization } from 'better-auth/plugins';
 
 const authConfig = {
 	secret: env.BETTER_AUTH_SECRET,
@@ -74,6 +75,28 @@ const authConfig = {
 		}
 	},
 	plugins: [
+		openAPI(),
+		organization({
+			schema: {
+				organization: {
+					additionalFields: {
+						onboardingStep: { type: 'number' },
+						location: { type: 'string' },
+						phone: { type: 'string' },
+						email: { type: 'string' },
+						website: { type: 'string' },
+						timeZone: { type: 'string' }
+					}
+				}
+			}
+		}),
+		magicLink({
+			sendMagicLink: async ({ email, url }) => {
+				console.log('Sending magic link to:', email);
+				console.log('Magic link URL:', url);
+			},
+			disableSignUp: true
+		}),
 		sveltekitCookies(getRequestEvent) // make sure this is the last plugin in the array
 	]
 } satisfies Omit<Parameters<typeof betterAuth>[0], 'database'>;
