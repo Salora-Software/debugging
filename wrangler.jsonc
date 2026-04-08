@@ -1,0 +1,23 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "test-app",
+	"compatibility_date": "2026-04-08",
+	"compatibility_flags": [
+		"nodejs_als"
+	],
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	},
+	"workers_dev": true,
+	"preview_urls": true,
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "test-db",
+			"database_id": "aec4d465-0a2f-4d71-bce7-1da383c0d0eb",
+			"migrations_dir": "./drizzle"
+		}
+	]
+}
